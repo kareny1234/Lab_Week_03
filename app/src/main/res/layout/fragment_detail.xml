@@ -1,36 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/dividerVertical"
-        android:layout_marginBottom="12dp"/>
-
+    <!-- Title Kopi -->
     <TextView
         android:id="@+id/coffee_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CAFFE LATTE"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:paddingBottom="8dp"/>
+        android:text="Nama Kopi"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
+    <!-- Deskripsi -->
     <TextView
         android:id="@+id/coffee_desc"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="A tall, mild \'milk coffee\' (about 150-300 ml). An
-espresso with steamed milk and only a little milk foam poured over it. Serve in a
-latte glass or a coffee cup. Flavored syrup can be added."
-        android:textSize="14sp"
-        android:gravity="center"
-        android:lineSpacingExtra="2dp"/>
+        android:text="Deskripsi kopi..." />
+
+    <!-- Tombol Back -->
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" />
 
 </LinearLayout>

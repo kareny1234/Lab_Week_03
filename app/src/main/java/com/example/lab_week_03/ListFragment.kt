@@ -30,24 +30,21 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ambil semua view kopi
+        // daftar semua item kopi
         val coffeeList = listOf<View>(
             view.findViewById(R.id.affogato),
             view.findViewById(R.id.americano),
-            view.findViewById(R.id.latte)
+            view.findViewById(R.id.latte),
+            view.findViewById(R.id.cappuccino),
+            view.findViewById(R.id.mocha)
         )
 
-        // pasang listener ke masing-masing
+        // pasang click listener untuk setiap item
         coffeeList.forEach { coffee ->
             coffee.setOnClickListener {
                 coffeeListener?.onSelected(coffee.id)
             }
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        coffeeListener = null
     }
 
     companion object {
