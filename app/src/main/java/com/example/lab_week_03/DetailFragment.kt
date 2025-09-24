@@ -13,11 +13,8 @@ class DetailFragment : Fragment() {
     private var param2: String? = null
 
     // akses TextView dari layout
-    private val coffeeTitle: TextView?
-        get() = view?.findViewById(R.id.coffee_title)
-
-    private val coffeeDesc: TextView?
-        get() = view?.findViewById(R.id.coffee_desc)
+    private var coffeeTitle: TextView? = null
+    private var coffeeDesc: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +28,20 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout
+        // Inflate layout fragment_detail.xml
         return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // inisialisasi TextView setelah view terbentuk
+        coffeeTitle = view.findViewById(R.id.coffee_title)
+        coffeeDesc = view.findViewById(R.id.coffee_desc)
+
+        // ambil argumen COFFEE_ID
+        val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
+        setCoffeeData(coffeeId)
     }
 
     fun setCoffeeData(id: Int) {
@@ -55,13 +64,12 @@ class DetailFragment : Fragment() {
     companion object {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
+        private const val COFFEE_ID = "COFFEE_ID"
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(coffeeId: Int) =
             DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(COFFEE_ID, coffeeId)
                 }
             }
     }
