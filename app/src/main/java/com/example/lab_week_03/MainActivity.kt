@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentContainerView
 
+// taruh interface di sini
 interface CoffeeListener {
     fun onSelected(id: Int)
 }
@@ -17,31 +18,27 @@ class MainActivity : AppCompatActivity(), CoffeeListener {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Pastikan ID view sama dengan yg ada di activity_main.xml
+        // biar layout tidak ketabrak status bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.fragment_container)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        // tambahkan ListFragment pertama kali
         if (savedInstanceState == null) {
-            findViewById<FragmentContainerView>(R.id.fragment_container).let { containerLayout ->
-                val listFragment = ListFragment()
-                supportFragmentManager.beginTransaction()
-                    .add(containerLayout.id, listFragment)
-                    .commit()
-            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ListFragment())
+                .commit()
         }
     }
 
+    // implementasi CoffeeListener
     override fun onSelected(id: Int) {
-        // kalau single-pane → ganti fragment_container dengan detail fragment
-        findViewById<FragmentContainerView>(R.id.fragment_container).let { containerLayout ->
-            val detailFragment = DetailFragment.newInstance(id)
-            supportFragmentManager.beginTransaction()
-                .replace(containerLayout.id, detailFragment)
-                .addToBackStack(null)
-                .commit()
-        }
+        val detailFragment = DetailFragment.newInstance(id)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, detailFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

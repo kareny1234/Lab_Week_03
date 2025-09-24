@@ -7,15 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-// konstanta untuk argument fragment
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ListFragment : Fragment() {
 
-class ListFragment : Fragment(), View.OnClickListener {
-
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var coffeeListener: CoffeeListener
+    private var coffeeListener: CoffeeListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -26,50 +20,37 @@ class ListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate layout fragment_list.xml
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // ambil semua view kopi
         val coffeeList = listOf<View>(
             view.findViewById(R.id.affogato),
             view.findViewById(R.id.americano),
             view.findViewById(R.id.latte)
         )
 
-        coffeeList.forEach {
-            it.setOnClickListener(this)
+        // pasang listener ke masing-masing
+        coffeeList.forEach { coffee ->
+            coffee.setOnClickListener {
+                coffeeListener?.onSelected(coffee.id)
+            }
         }
     }
 
-    override fun onClick(v: View?) {
-        v?.let { coffee ->
-            coffeeListener.onSelected(coffee.id)
-        }
+    override fun onDetach() {
+        super.onDetach()
+        coffeeListener = null
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val COFFEE_ID = "COFFEE_ID"
     }
 }
